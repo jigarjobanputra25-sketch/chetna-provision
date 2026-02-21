@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Chetna Provision</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+}
+header {
+  background: #09283c;
+  color: white;
+  padding: 15px;
+  text-align: center;
+}
+nav {
+  background: #fff;
+  padding: 10px;
+  text-align: center;
+}
+nav button {
+  margin: 5px;
+  padding: 10px 15px;
+  border: none;
+  background: #4dc0e6;
+  color: rgb(48, 46, 46);
+  border-radius: 5px;
+  cursor: pointer;
+}
+.search {
+  padding: 10px;
+  text-align: center;
+}
+.search input {
+  width: 90%;
+  padding: 10px;
+  font-size: 16px;
+}
+.container {
+  padding: 15px;
+}
+.category, .product {
+  background: white;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+}
+.product img {
+  width: 100%;
+  max-width: 150px;
+}
+.whatsapp {
+  background: #63a9e1;
+  color: white;
+  padding: 8px 12px;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 5px;
+  margin-top: 8px;
+}
+footer {
+  background: #2e4d7a;
+  color: white;
+  text-align: center;
+  padding: 15px;
+}
+.hidden {
+  display: none;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>🛒 CHETNA PROVISION</h1>
+<p>Daily Groceries at Best Price | घर बैठे किराना</p>
+<p>📞 8459133610 | 📲 WhatsApp Order</p>
+</header>
+
+<nav>
+<button onclick="showHome()">Home</button>
+<button onclick="showCategories()">Categories</button>
+<button onclick="showOffers()">Offers</button>
+<button onclick="showContact()">Contact</button>
+</nav>
+
+<div class="search">
+<input type="text" placeholder="Search product..." onkeyup="searchProduct(this.value)">
+</div>
+
+<div class="container" id="content"></div>
+
+<footer>
+<p>Owner: Jayesh Jobanputra</p>
+<p>🚚 Home Delivery Available</p>
+<p>📲 Order on WhatsApp: 9404092433</p>
+</footer>
+
+<script>
+const whatsapp = "https://wa.me/919404092433?text=";
+
+const products = {
+  "Pulses" : [
+    ["Toor Dal","₹160/kg"],
+    ["Moong Dal","₹140/kg"],
+    ["Chana Dal","₹110/kg"],
+    ["Masoor Dal","₹120/kg"],
+    ["Urad Dal","₹150/kg"]
+  ],
+  "Rice & Wheat": [
+    ["Basmati Rice","₹90/kg"],
+    ["Kolam Rice","₹60/kg"],
+    ["Wheat Atta","₹45/kg"],
+    ["Rice Flour","₹50/kg"]
+  ],
+  "Spices": [
+    ["Turmeric Powder","₹30/100g"],
+    ["Red Chilli Powder","₹35/100g"],
+    ["Coriander Powder","₹25/100g"],
+    ["Garam Masala","₹60/100g"]
+  ],
+  "Oil & Ghee": [
+    ["Sunflower Oil","₹140/L"],
+    ["Groundnut Oil","₹160/L"],
+    ["Mustard Oil","₹150/L"],
+    ["Cow Ghee","₹550/kg"]
+  ],
+  "Snacks": [
+    ["Good Day","₹10"],
+    ["Marie","₹10"],
+    ["Kurkure","₹20"],
+    ["Namkeen","₹120/kg"]
+  ],
+  "Personal & Cleaning": [
+    ["Soap","₹30"],
+    ["Shampoo Sachet","₹2"],
+    ["Detergent","₹90/kg"],
+    ["Dish Wash","₹60"]
+  ]
+};
+
+function showHome(){
+  document.getElementById("content").innerHTML = `
+  <div class="category">
+    <h2>Welcome to Chetna Provision</h2>
+    <p>Fresh groceries • Best prices • Easy WhatsApp ordering</p>
+    <a class="whatsapp" href="${whatsapp}Hello Chetna Provision">Order Now on WhatsApp</a>
+  </div>`;
+}
+
+function showCategories(){
+  let html="";
+  for(let cat in products){
+    html += `<div class="category">
+      <h3>${cat}</h3>
+      <button onclick="showProducts('${cat}')">View Items</button>
+    </div>`;
+  }
+  document.getElementById("content").innerHTML = html;
+}
+
+function showProducts(cat){
+  let html=`<h2>${cat}</h2>`;
+  products[cat].forEach(p=>{
+    let msg = encodeURIComponent(`Hello Chetna Provision,\nI want to order:\nProduct: ${p[0]}\nPrice: ${p[1]}`);
+    html += `
+    <div class="product">
+      <h3>${p[0]}</h3>
+      <p>Price: ${p[1]}</p>
+      <a class="whatsapp" href="${whatsapp}${msg}">Order on WhatsApp</a>
+    </div>`;
+  });
+  document.getElementById("content").innerHTML = html;
+}
+
+function showOffers(){
+  document.getElementById("content").innerHTML = `
+  <div class="category">
+    <h2>🔥 Offers</h2>
+    <p>✔ Weekly Discounts</p>
+    <p>✔ Festival Special Offers</p>
+    <p>✔ Bulk Purchase Discount</p>
+  </div>`;
+}
+
+function showContact(){
+  document.getElementById("content").innerHTML = `
+  <div class="category">
+    <h2>📍 Contact Us</h2>
+    <p>📞 Call: 8459133610</p>
+    <p>📲 WhatsApp: 9404092433</p>
+    <p>🚚 Home Delivery Available</p>
+  </div>`;
+}
+
+function searchProduct(text){
+  text = text.toLowerCase();
+  let html="";
+  for(let cat in products){
+    products[cat].forEach(p=>{
+      if(p[0].toLowerCase().includes(text)){
+        let msg = encodeURIComponent(`Hello Chetna Provision,\nI want to order:\nProduct: ${p[0]}\nPrice: ${p[1]}`);
+        html += `
+        <div class="product">
+          <h3>${p[0]}</h3>
+          <p>${p[1]}</p>
+          <a class="whatsapp" href="${whatsapp}${msg}">Order on WhatsApp</a>
+        </div>`;
+      }
+    });
+  }
+  document.getElementById("content").innerHTML = html || "<p>No product found</p>";
+}
+
+showHome();
+</script>
+
+</body>
+</html>
